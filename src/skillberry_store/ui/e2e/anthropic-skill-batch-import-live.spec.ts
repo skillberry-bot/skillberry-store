@@ -261,8 +261,8 @@ test.describe('Anthropic Skill Batch Import - Live Backend', () => {
     await importButton.click();
     await page.waitForSelector('[role="dialog"]', { state: 'visible' });
 
-    // Verify the form group label
-    await expect(page.getByText('Import Mode')).toBeVisible();
+    // Verify the form group label (use exact match to avoid matching "Snippet Import Mode")
+    await expect(page.getByText('Import Mode', { exact: true })).toBeVisible();
 
     // Verify the checkbox label
     await expect(page.getByText(/batch mode - import multiple skills from parent directory/i)).toBeVisible();
@@ -340,8 +340,8 @@ test.describe('Anthropic Skill Batch Import - Live Backend', () => {
     await importButton.click();
     await page.waitForSelector('[role="dialog"]', { state: 'visible' });
 
-    // Get positions of elements
-    const batchModeLabel = page.getByText('Import Mode');
+    // Get positions of elements (use exact match to avoid ambiguity)
+    const batchModeLabel = page.getByText('Import Mode', { exact: true });
     const snippetModeLabel = page.getByText('Snippet Import Mode');
 
     const batchModeBox = await batchModeLabel.boundingBox();

@@ -553,7 +553,7 @@ describe('AnthropicSkillImporter', () => {
     });
 
     it('should reset state when modal is closed', () => {
-      const { rerender } = render(
+      const { rerender, unmount } = render(
         <AnthropicSkillImporter
           isOpen={true}
           onClose={mockOnClose}
@@ -575,8 +575,11 @@ describe('AnthropicSkillImporter', () => {
       // Verify onClose was called
       expect(mockOnClose).toHaveBeenCalled();
 
+      // Unmount the component completely
+      unmount();
+
       // Reopen modal with fresh render
-      const { rerender: newRerender } = render(
+      render(
         <AnthropicSkillImporter
           isOpen={true}
           onClose={mockOnClose}
@@ -585,7 +588,7 @@ describe('AnthropicSkillImporter', () => {
       );
 
       // State should be reset
-      const newUrlInput = screen.getByPlaceholderText(/github.com\/anthropics\/skills/i) as HTMLInputElement;
+      const newUrlInput = screen.getByPlaceholderText(/github.com\/anthropics\/skills\/tree\/main\/skills\/pptx/i) as HTMLInputElement;
       expect(newUrlInput.value).toBe('');
 
       const newBatchModeCheckbox = screen.getByLabelText(/Batch Mode - Import multiple skills/i) as HTMLInputElement;
